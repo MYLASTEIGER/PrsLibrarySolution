@@ -31,5 +31,22 @@ namespace PrsLibrary.Controllers {
             _context.SaveChanges();
             return user;
         }
+        public void Change(User user) {
+            _context.SaveChanges();
+
+
+        }
+       public void Remove(int id) {
+        var user = _context.Users.Find(id);
+        if (user is null) {
+            throw new Exception("User not found.");
+        }
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+        }
     }
+
+
+
 }
+
