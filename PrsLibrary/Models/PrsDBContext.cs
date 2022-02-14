@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace PrsLibrary.Models {
     public class PrsDbContext : DbContext {
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Vendor> Vendors { get; set; }
 
 
         public PrsDbContext() { }
@@ -23,6 +24,10 @@ namespace PrsLibrary.Models {
 
             builder.Entity<User>(e => {
                 e.HasIndex(p => p.Username).IsUnique(true);
+            });
+
+            builder.Entity<Vendor>(e => {
+                e.HasIndex(p => p.Code).IsUnique(true);
             });
         }
     }
