@@ -15,14 +15,14 @@ namespace PrsLibrary.Controllers {
         }
         private void RecalculateRequestTotal(int requestId) {
             var request = _context.Requests.Find(requestId);
-
-            request.Total = (from rl in _context.RequestLines
-                             join p in _context.Products
-                             on rl.ProductId equals p.Id
-                             where rl.RequestId == requestId
-                             select new {
-                                 LineTotal = rl.Quantity * p.Price
-                             }).Sum(x => x.LineTotal);
+            //reading request above and useing below statements to set the total
+            request.Total = (from rl in _context.RequestLines //all request lines
+                             join p in _context.Products // joining all together
+                             on rl.ProductId equals p.Id //shows how they are put together
+                             where rl.RequestId == requestId //only show where the request id matches id passed into method. 
+                             select new { //what columns do we want to output? new + curly braces say some of the line items.
+                                 LineTotal = rl.Quantity * p.Price // multiplying the quantity and price from lines chosen Linetotal is alias
+                             }).Sum(x => x.LineTotal);//sum up all line totals this total is placed into request.total
             _context.SaveChanges();
         }
         public IEnumerable<RequestLine> GetAll() {
@@ -46,10 +46,12 @@ namespace PrsLibrary.Controllers {
             }
             _context.RequestLines.Add(requestline);
             _context.SaveChanges();
+            RecalculateRequestTotal(requestline.RequestId);
             return requestline;
         }
         public void Change(RequestLine requestline) {
             _context.SaveChanges();
+            RecalculateRequestTotal(requestline.RequestId);
         }
         public void Remove(int id) {
             var requestline = _context.RequestLines.Find(id);
@@ -58,6 +60,7 @@ namespace PrsLibrary.Controllers {
             }
             _context.RequestLines.Remove(requestline);
             _context.SaveChanges();
+            RecalculateRequestTotal(requestline.RequestId);
         }
 
     }

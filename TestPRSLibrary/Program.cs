@@ -9,14 +9,18 @@ namespace TestPRSLibrary {
         static void Main(string[] args) {
 
             var context = new PrsDbContext();
-            var reqCtrl = new RequestsController(context);
+            var reqlCtrl = new RequestlinesController(context);
 
-            var req = reqCtrl.GetByPk(5);
+            var reql = reqlCtrl.GetByPK(7);
+            reql.Quantity = 2;
+            reqlCtrl.Change(reql);
 
-            var reqs = reqCtrl.GetRequestsInReview(1);
-            foreach(var req1 in reqs) {
-                Console.WriteLine($"{req1.Description}, {req1.Status}, {req1.Total}, {req1.UserId}");
-            }
+            //var req = reqCtrl.GetByPk(5);
+
+            //var reqs = reqCtrl.GetRequestsInReview(1);
+            //foreach(var req1 in reqs) {
+            //    Console.WriteLine($"{req1.Description}, {req1.Status}, {req1.Total}, {req1.UserId}");
+            //}
 
             //reqCtrl.SetReview(req);
             //reqCtrl.SetRejected(req);

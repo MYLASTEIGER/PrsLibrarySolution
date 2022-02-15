@@ -11,6 +11,10 @@ namespace PrsLibrary.Controllers {
 
         private readonly PrsDbContext _context;
 
+        public object GetByPK(int v) {
+            throw new NotImplementedException();
+        }
+
         public RequestsController(PrsDbContext context) {
             this._context = context;      
         }
