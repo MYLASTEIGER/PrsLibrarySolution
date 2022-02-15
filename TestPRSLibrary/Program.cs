@@ -9,16 +9,31 @@ namespace TestPRSLibrary {
         static void Main(string[] args) {
 
             var context = new PrsDbContext();
+            var reqCtrl = new RequestsController(context);
 
-            var userCtrl = new UsersController(context);
+            var req = reqCtrl.GetByPk(5);
 
-            var user = userCtrl.Login("sa", "sax");
-
-            if(user is null) {
-                Console.WriteLine("User not Found");
-            } else {
-                Console.WriteLine(user.Username);
+            var reqs = reqCtrl.GetRequestsInReview(1);
+            foreach(var req1 in reqs) {
+                Console.WriteLine($"{req1.Description}, {req1.Status}, {req1.Total}, {req1.UserId}");
             }
+
+            //reqCtrl.SetReview(req);
+            //reqCtrl.SetRejected(req);
+
+           // reqCtrl.SetApproved(req);
+            //req = reqCtrl.GetByPk(5);
+            //Console.WriteLine($"{req.Description}, {req.Status}, {req.Total}");
+
+            //var userCtrl = new UsersController(context);
+
+            //var user = userCtrl.Login("sa", "sax");
+
+            //if(user is null) {
+            //    Console.WriteLine("User not Found");
+            //} else {
+            //    Console.WriteLine(user.Username);
+            //}
 
 
             //var prodCtrl = new ProductsController(context);
@@ -62,8 +77,8 @@ namespace TestPRSLibrary {
             //foreach (var user in users) {
             //    Console.WriteLine($"{user.Id} {user.Firstname} {user.Lastname}");
             //}
-            
-            
+
+
         }
     }
 }
