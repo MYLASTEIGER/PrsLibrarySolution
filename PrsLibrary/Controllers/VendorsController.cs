@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PrsLibrary.Controllers {
-    class VendorsControllers {
+        public class VendorsController {
         private readonly PrsDbContext _context;
 
-        public VendorsControllers(PrsDbContext context) {
+        public VendorsController(PrsDbContext context) {
             this._context = context;
         }
         public IEnumerable<Vendor> GetAll() {
