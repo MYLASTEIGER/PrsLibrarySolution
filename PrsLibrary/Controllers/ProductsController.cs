@@ -1,4 +1,5 @@
-﻿using PrsLibrary.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PrsLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace PrsLibrary.Controllers {
     public class ProductsController {
+
         private readonly PrsDbContext _context;
 
         public ProductsController(PrsDbContext context) {
             this._context = context;
         }
         public IEnumerable<Product> GetAll() {
-            return _context.Products.ToList();
-        }
+            return _context.Products.Include(x => x.Vendor).ToList();
+        }//include(x => x.vendor) brings the vendor name into the getting of the products
 
         public Product GetByPk(int id) {
             return _context.Products.Find(id);

@@ -20,7 +20,7 @@ namespace PrsLibrary.Models {
         [StringLength(225)]
         public string PhotoPath { get; set; }
         public int VendorId { get; set; }
-
+        //below is how you recognize the foreign key
         public virtual Vendor Vendor { get; set; }
         public Product() { }
 
